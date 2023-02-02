@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+    function validate() {
+
+        var re = /^[a-z0-9]{4,16}$/
+
+        let id = document.getElementById("id");
+        if(!re.test(re, id, "영문 소문자 및 숫자를 이용하여, 4~16자를 입력하세요.")) return false;
+
+        let pw = document.getElementById("pw");
+        let checkpw = document.getElementById("checkpw");
+        if(!re.test(re, pw, "비밀번호 규칙에 맞게 입려갛세요.")) return false;
+
+        if(pw.value != checkpw.value) {
+            alert("비밀번호가 일치되지 않습니다.");
+            checkpw.focus();
+            checkpw.value = "";
+            return true;
+        }
+
+        return true;
+    }
+
+    function chek(re, target, msg) {
+        if(re.test(target.value)) {
+            return true;
+        }
+        target.value = "";
+        alert(msg);
+        return false;
+    }
+
+</script>
+</head>
+<body>
+    <h1 align="center" style="font-size:50px;"><font color="navy"><b>SIGN UP</b></font></h1>
+    <form name="join" onsubmit="return validate();" action="" method="post">
+        <table width="600" height="400" border="1" align="center" cellspacing="0">
+            <tr height="10" align="center">
+                <td colspan="2" style="background:navy;"><font color=white><b>회원기본정보</b></font></td>
+            </tr>
+            <tr>
+                <td><b>아이디</b></td>
+                <td><input type="text" style="width:170px" id="id" name="id" maxlength="12" /> ※영문 소문자, 4-16자</td>
+            </tr>
+            <tr>
+                <td><b>비번</b></td>
+                <td><input type="password" style="width:170px" id="pw" maxlength="12" /> ※영문/최소 1개의 숫자 또는 특수문자</td>
+            </tr>
+            <tr>
+                <td><b>비번확인</b></td>
+                <td><input type="password" style="width:170px" id="checkpw" maxlength="12" /></td>
+            </tr>
+            <tr>
+                <td><b>이름</b></td>
+                <td><input type="text" style="width:170px" name="name" maxlength="12" /></td>
+            </tr>
+            <tr>
+                <td><b>메일주소</b></td>
+                <td><input type="text" style="width:170px" id="email" /> ex)wjdxo513@naver.com</td>
+            </tr>
+            <tr>
+                <td><b>메일수신여부</b></td>
+                <td>
+                    <input type="radio" name="email_receive" id="emailchk1" />수신
+                    <input type="radio" name="email_receive" id="emailchk2" />수신안함
+                </td>
+            </tr>
+            <tr>
+                <td><b>비밀번호 확인시 질문</b></td>
+                <td>
+                   <select id="pw_question">
+                        <option value="">---------선택---------</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                   </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>비밀번호 질문 답</b></td>
+                <td>
+                    <input type="text" style="width: 170%" id="pw_answer">
+                </td>
+            </tr>
+            <tr>
+                <td><b>성별</b></td>
+                <td>
+                    <input type="radio" name="gender" id="male" />남자
+                    <input type="radio" name="gender" id="female" />여자
+                </td>
+            </tr>
+            <tr>
+                <td><b>생일:</b></td>
+                <td>
+                    <input type="text" style="width:80px" id="years" readonly />년
+                    <input type="text" style="width:80px" id="month" readonly />월
+                    <input type="text" style="width:80px" id="day" readonly />일
+                </td>
+            </tr>
+        </table>
+        <center>
+            <br />
+            <input type="submit" value="회원가입" style="border-radius:5px;" />
+            <input type="reset" value="다시입력" style="border-radius:5px;" />
+        </center>
+    </form>
+    
+</body>
+</html>
