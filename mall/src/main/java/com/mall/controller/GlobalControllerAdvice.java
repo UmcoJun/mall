@@ -14,10 +14,10 @@ import lombok.extern.log4j.Log4j;
 /*
  @ControllerAdvice : 공통모델작업과 Execption(예외처리)에 사용된다. 
  * 
- com.docmall.controller 패키지안의 존재하는 컨트롤러의 매핑주소 요청을 받으면, categoryList 메소드가 자동으로 호출된다.
+ com.mall.controller 패키지안의 존재하는 컨트롤러의 매핑주소 요청을 받으면, categoryList 메소드가 자동으로 호출된다.
  */
 @Log4j
-@ControllerAdvice(basePackages = {"com.docmall.controller"})
+@ControllerAdvice(basePackages = {"com.mall.controller"})
 public class GlobalControllerAdvice {
 
 	@Autowired

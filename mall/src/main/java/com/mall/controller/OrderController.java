@@ -52,7 +52,7 @@ public class OrderController {
 	
 	// 업로드폴더 주입
 	@Resource(name = "uploadPath") // servlet-context.xml 설정.
-	private String uploadPath; // "D:\\IT\\upload\\goods\\"
+	private String uploadPath; 
 			
 	// 1) 바로주문 -> 주문작성(장바구니 사용안함)  2) 장바구니 -> 주문작성.
 	@GetMapping("/orderListInfo")

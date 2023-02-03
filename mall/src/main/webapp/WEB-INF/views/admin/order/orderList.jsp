@@ -165,8 +165,7 @@ desired effect
 	      </td>
 	      <td>
 	      	<button type="button" name="btnOrderStatusChange" class="btn btn-link">적용</button>
-	      	<button type="button" name="btnOrderDetail1" class="btn btn-link">상세보기1</button>
-          	<button type="button" name="btnOrderDetail2" class="btn btn-link">상세보기2</button>
+	      	<button type="button" name="btnOrderDetail" class="btn btn-link">상세보기</button>
           	<button type="button" name="btnOrderDelete" class="btn btn-link">삭제</button>
 	      </td>
 	    </tr>
@@ -471,20 +470,12 @@ desired effect
     });
 
     // 주문 상세보기1 Modal
-    $("button[name='btnOrderDetail1']").on("click", function() {
+    $("button[name='btnOrderDetail']").on("click", function() {
       //console.log("주문상세내역")
 
       let odr_code = $(this).parent().parent().find("span.odr_code").text();
       // orderDetail.jsp실행결과를 불러온다.
-      $("#orderDetailModal").load('/admin/order/orderDetail1?odr_code=' + odr_code);
-      $("#orderDetailModal").modal('show');
-    });
-
-    // 주문 상세보기2 Modal
-    $("button[name='btnOrderDetail2']").on("click", function() {
-     
-      let odr_code = $(this).parent().parent().find("span.odr_code").text();
-      $("#orderDetailModal").load('/admin/order/orderDetail2?odr_code=' + odr_code);
+      $("#orderDetailModal").load('/admin/order/orderDetail?odr_code=' + odr_code);
       $("#orderDetailModal").modal('show');
     });
 

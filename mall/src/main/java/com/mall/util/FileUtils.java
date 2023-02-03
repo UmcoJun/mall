@@ -27,7 +27,7 @@ public class FileUtils {
 	 4. byte[]배열로 다운로드
 	 */
 	
-	// 파일업로드 작업	D:\\IT\\upload\\goods\\2022\\11\\22
+	// 파일업로드 작업	
 	public static String uploadFile(String uploadFolder, String uploadDateFolderPath, MultipartFile uploadFile) {
 		
 		String uploadFileName = ""; // 실제 업로드한 파일명.

@@ -35,7 +35,7 @@ public class ProductController {
 	
 	// 업로드폴더 주입
 	@Resource(name = "uploadPath") // servlet-context.xml 설정.
-	private String uploadPath; // "D:\\IT\\upload\\goods\\"
+	private String uploadPath; 
 		
 	
 	// 1차카테고리를 참조하는 2차카테고리 목록

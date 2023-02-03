@@ -40,46 +40,46 @@
 		</if>
 	
 	</sql>
-	
+
 	<select id="getOrderList" resultType="com.mall.domain.OrderVO">
 	
 		<![CDATA[
-		SELECT ODR_CODE, ODR_DATE, MEM_ID, ODR_NAME, ODR_TOTAL_PRICE, ODR_STATUS
-		FROM (
-		    SELECT  /*+ INDEX_DESC(ORD PK_ORDER_CODE)*/ 
-            ROWNUM RN, ORD.ODR_CODE, ORD.ODR_DATE, ORD.MEM_ID, ORD.ODR_NAME, ORD.ODR_TOTAL_PRICE, ODR_STATUS
-            FROM 
-            	ORDER_TBL ORD 
-            WHERE  
-		]]> 
-			<include refid="odrstatus" />
-			<include refid="period" />     
-		 	<include refid="criteria" /> 
-		<![CDATA[ 
-			ROWNUM <= #{cri.pageNum} * #{cri.amount}
-			)
-		WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+			SELECT ODR_CODE, ODR_DATE, MEM_ID, ODR_NAME, ODR_TOTAL_PRICE, ODR_STATUS
+			FROM (
+			    SELECT  /*+ INDEX_DESC(ORD PK_ORDER_CODE)*/ 
+	            ROWNUM RN, ORD.ODR_CODE, ORD.ODR_DATE, ORD.MEM_ID, ORD.ODR_NAME, ORD.ODR_TOTAL_PRICE, ODR_STATUS
+	            FROM 
+	            	ORDER_TBL ORD 
+	            WHERE  
+			]]> 
+				<include refid="odrstatus" />
+				<include refid="period" />     
+			 	<include refid="criteria" /> 
+			<![CDATA[ 
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}
+				)
+			WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>
-		
+	
 	</select>
 	
 	<select id="getOrderTotalCount" resultType="int">
 	
-		SELECT 
-			COUNT(*) 
-		FROM 
+		SELECT
+			COUNT(*)
+		FROM	
 			ORDER_TBL
 		WHERE
-			<include refid="odrstatus" /> 
-			<include refid="period" />   
-			<include refid="criteria" /> 
+			<include refid="odrstatus" />
+			<include refid="period" />     
+		 	<include refid="criteria" /> 
 		ODR_CODE > 0
 	
 	</select>
 	
 	<update id="orderStatusChange">
 	
-		UPDATE 
+		UPDATE
 			ORDER_TBL
 		SET 
 			ODR_STATUS = #{odr_status}
@@ -88,7 +88,6 @@
 	
 	</update>
 	
-	<!-- 진행상태 카운트 -->
 	<select id="orderStatusCount" resultType="int">
 	
 		SELECT 
@@ -100,20 +99,18 @@
 	
 	</select>
 	
-	<!-- 주문상세정보1 -->
-	<select id="getOrderDetailList1" resultType="com.mall.domain.OrderDetailVOList">
+	<select id="getOrderDetailList" resultType="com.mall.domain.OrderDetailVOList">
 	
-		SELECT 
+		SELECT
 			OD.ODR_CODE, OD.PDT_NUM, P.PDT_NAME, P.PDT_PRICE, OD.ODR_AMOUNT, OD.ODR_PRICE, P.PDT_IMG_FOLDER, P.PDT_IMG
-		FROM 
+		FROM
 			ORDER_DETAIL_TBL OD INNER JOIN PRODUCT_TBL P
-		ON 
-			OD.PDT_NUM = P.PDT_NUM
-		WHERE 
+		ON
+			O.PDT_NUM = P.PDT_NUM
+		WHERE
 			ODR_CODE = #{odr_code}
 	
 	</select>
-	 
 	
 	<select id="getPayment" resultType="com.mall.domain.PaymentVO">
 	
@@ -123,7 +120,7 @@
 			PAYMENT_TBL
 		WHERE
 			ODR_CODE = #{odr_code}
-		
+	
 	</select>
 	
 	<select id="getOrder" resultType="com.mall.domain.OrderVO">
@@ -136,7 +133,7 @@
 			ODR_CODE = #{odr_code}
 	
 	</select>
-
+	
 	<update id="pay_memo">
 	
 		UPDATE
@@ -145,7 +142,7 @@
 			PAY_MEMO = #{pay_memo}
 		WHERE
 			PAY_CODE = #{pay_code}
-		
+			
 	</update>
 	
 	<update id="orderTotalPriceChange">
@@ -156,66 +153,16 @@
 			ODR_TOTAL_PRICE = ODR_TOTAL_PRICE - #{odr_price}
 		WHERE
 			ODR_CODE = #{odr_code}
-	
+			
 	</update>
 	
-	<resultMap type="com.mall.domain.OrderDetailVO" id="orderDetailMap">
-	
-		<id property="odr_code" column="odr_code" />
-		<id property="pdt_num" column="pdt_num" />
-		<result property="odr_amount" column="odr_amount" />
-		<result property="odr_price" column="odr_price" />
-	
-	</resultMap>
-	
-	<resultMap type="com.mall.domain.ProductVO" id="productMap">
-	
-		<id property="pdt_num" column="pdt_num" />
-		<result property="cate_code" column="cate_code" />
-		<result property="cate_code_prt" column="cate_code_prt" />
-		<result property="pdt_name" column="pdt_name" />
-		<result property="pdt_price" column="pdt_price" />
-		<result property="pdt_discount" column="pdt_discount" />
-		<result property="pdt_company" column="pdt_company" />
-		<result property="pdt_detail" column="pdt_detail" />
-		<result property="pdt_img_folder" column="pdt_img_folder" />
-		<result property="pdt_img" column="pdt_img" />
-		<result property="pdt_amount" column="pdt_amount" />
-		<result property="pdt_buy" column="pdt_buy" />
-		<result property="pdt_date_sub" column="pdt_date_sub" />
-		<result property="pdt_date_up" column="pdt_date_up" />
-	
-	</resultMap>
-	
-	<resultMap type="com.mall.domain.OrderDetailProductVO" id="orderDetailProductMap">
-	
-		<collection property="orderDetailVO" resultMap="orderDetailMap" />
-		<collection property="productVO" resultMap="productMap" />
-	
-	</resultMap>
-	
-	<!-- resultMap을 사용목적. 주문상세정보2 -->
-	<select id="getOrderDetailList2" resultMap="orderDetailProductMap">
-	
-		SELECT 
-			OD.ODR_CODE, OD.PDT_NUM, P.PDT_NAME, P.PDT_PRICE, OD.ODR_AMOUNT, OD.ODR_PRICE, P.PDT_IMG_FOLDER, P.PDT_IMG
-		FROM 
-			ORDER_DETAIL_TBL OD INNER JOIN PRODUCT_TBL P
-		ON 
-			OD.PDT_NUM = P.PDT_NUM
-		WHERE 
-			ODR_CODE = #{odr_code}
-	
-	</select>
-	
-	<!-- 주문삭제 -->
 	<delete id="orderDelete">
 	
 		DELETE FROM
 			ORDER_TBL
 		WHERE
 			ODR_CODE = #{odr_code}
-	
+			
 	</delete>
 	
 	<delete id="orderDetailDelete">
@@ -224,7 +171,7 @@
 			ORDER_DETAIL_TBL
 		WHERE
 			ODR_CODE = #{odr_code}
-	
+			
 	</delete>
 	
 	<delete id="paymentDelete">
@@ -236,17 +183,15 @@
 	
 	</delete>
 	
-	<!-- 상품 개별삭제 -->
 	<delete id="orderDetailProductDelete">
 	
 		DELETE FROM
 			ORDER_DETAIL_TBL
-		WHERE 
+		WHERE
 			ODR_CODE = #{odr_code}
 		AND
 			PDT_NUM = #{pdt_num}
-		
-	</delete>
 	
+	</delete>
 	
 </mapper>

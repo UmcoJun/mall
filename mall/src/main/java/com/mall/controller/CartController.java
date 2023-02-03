@@ -32,7 +32,7 @@ public class CartController {
 	
 	// 업로드폴더 주입
 	@Resource(name = "uploadPath") // servlet-context.xml 설정.
-	private String uploadPath; // "D:\\IT\\upload\\goods\\"
+	private String uploadPath;
 		
 	
 	// 장바구니 담기. 오라클 merge문법참조 https://gent.tistory.com/406

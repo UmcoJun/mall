@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.mapper.AdPaymentMapper">
 
-
+	<update id="orderPayTotalPriceChange">
+	
+		UPDATE
+			PAYMENT_TBL
+		SET
+			PAY_TOT_PRICE = PAY_TOT_PRICE - #{odr_price}
+		WHERE
+			ODR_CODE = #{odr_code}
+	
+	</update>
 
 </mapper>
